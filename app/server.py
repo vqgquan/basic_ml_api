@@ -5,8 +5,10 @@ from fastapi import FastAPI, File, UploadFile
 from PIL import Image
 from app.model import FashionClassifier
 
+
+MODEL_PATH = 'app/model.pth'
 model = FashionClassifier()
-model.load_state_dict(torch.load("app/model.pth"))
+model.load_state_dict(torch.load(MODEL_PATH, map_location=torch.device('cpu')))
 model.eval()
 
 transform = transforms.Compose([

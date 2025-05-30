@@ -5,4 +5,4 @@ uvicorn
 torch 
 torchvision 
 torchaudio
-
+python-multipart
