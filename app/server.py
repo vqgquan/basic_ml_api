@@ -7,6 +7,20 @@ from app.model import FashionClassifier
 
 
 MODEL_PATH = 'app/model.pth'
+LABELS = {
+    0: "T-shirt/Top",
+    1: "Trouser",
+    2: "Pullover",
+    3: "Dress",
+    4: "Coat",
+    5: "Sandal",
+    6: "Shirt",
+    7: "Sneaker",
+    8: "Bag",
+    9: "Ankle Boot"
+}
+
+
 model = FashionClassifier()
 model.load_state_dict(torch.load(MODEL_PATH, map_location=torch.device('cpu')))
 model.eval()
@@ -42,4 +56,4 @@ async def create_upload_file(file: UploadFile):
     output = model(image)
     _, predicted = torch.max(output, 1)
     
-    return {"filename": file.filename, "prediction": predicted.item()}
+    return {"filename": file.filename, "prediction": predicted.item(), "label" : LABELS[predicted.item()]}
