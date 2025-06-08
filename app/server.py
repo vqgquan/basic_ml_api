@@ -4,6 +4,7 @@ import torchvision.transforms as transforms
 from fastapi import FastAPI, File, UploadFile
 from PIL import Image
 from app.model import FashionClassifier
+from fastapi.middleware.cors import CORSMiddleware
 
 
 MODEL_PATH = 'app/model.pth'
@@ -21,6 +22,7 @@ LABELS = {
 }
 
 
+
 model = FashionClassifier()
 model.load_state_dict(torch.load(MODEL_PATH, map_location=torch.device('cpu')))
 model.eval()
@@ -32,6 +34,15 @@ transform = transforms.Compose([
 ])
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # React frontend URL
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all methods (GET, POST, etc.)
+    allow_headers=["*"],  # Allow all headers
+)
+
 
 @app.get("/")
 def read_root():
