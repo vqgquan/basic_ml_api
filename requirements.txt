@@ -1,8 +1,6 @@
 fastapi
 typing
-numpy
 uvicorn
 torch 
 torchvision 
-torchaudio
 python-multipart
